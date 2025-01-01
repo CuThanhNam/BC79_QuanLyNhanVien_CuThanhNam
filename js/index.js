@@ -1,14 +1,59 @@
 let DSNV = [];
 
-document.getElementById("btnThemNV").onclick = function () {
-  let nhanVien = layThongTinNhanVien();
-  
-  DSNV.push(nhanVien);
+ let dsnvJson =  localStorage.getItem("DSNV");
+ 
+ let arrayDsnv = JSON.parse(dsnvJson);// nếu dưới local rỗng thì lấy lên null
+ 
+ // gán lại DSSV = arrayDssv khi arrayDssv không phải null
+ if(arrayDsnv) {
 
-  renderDSNV(DSNV);
+    // khi lấy từ local lên thì bị mất phương thức diemTrungBinh()
+    // tìm cách map lại (dùng vòng lặp) mảng mới có diemTrungBinh(), gợi ý tái sử dụng class 
+    //DSSV = arrayDssv;
+    // arrayDssv.forEach((sv) => {
+      // let sinhVien = new SinhVien(
+        // sv.maSv,
+        // sv.hoTen,
+        // sv.email,
+        // sv.matkhau,
+        // sv.diemToan,
+        // sv.diemLy,
+        // sv.diemHoa,
+      // );
+      // DSSV.push(sinhVien);
+    // });
+    DSNV = arrayDsnv.map((nv) => {
+      return new NhanVien(
+        nv.taiKhoan,
+        nv.hoTen,
+        nv.email,
+        nv.matKhau,
+        nv.ngayLam,
+        nv.luongCB,
+        nv.chucVu,
+        nv.gioLam,
+      );
+    
+    });
 
-  resetForm();
-};
+    renderDSNV(DSNV);
+ }
+
+ const themNv = () =>{
+
+   let nhanVien = layThongTinNhanVien();
+
+   DSNV.push(nhanVien);
+   console.log('DSNV:', DSNV);
+
+   let jsonDsnv = JSON.stringify(DSNV);
+   //sau khi sử dụng JSON.stringify thì mất phương thức điểm trung bình
+
+   localStorage.setItem("DSNV",jsonDsnv);
+
+   renderDSNV(DSNV);
+
+ };
 
 const xoaNhanVien = (taiKhoan) => {
   // Tìm vị trí nhân viên cần xóa
@@ -34,7 +79,7 @@ const suaNhanVien = (taiKhoan) => {
   document.getElementById("tknv").disabled = true;
 };
 
-document.getElementById("btnCapNhat").onclick = function () {
+const capNhatNv = () => {
   // Tìm vị trí của nhân viên cần cập nhật
   let taiKhoan = document.getElementById("tknv").value;
   let index = DSNV.findIndex((nv) => {

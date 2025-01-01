@@ -16,7 +16,7 @@ let layThongTinNhanVien = () => {
       ngayLam,
       luongCB,
       chucVu,
-      gioLam
+      gioLam,
     );
     return nhanVien;
   };
