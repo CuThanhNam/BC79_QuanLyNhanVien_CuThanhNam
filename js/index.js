@@ -39,7 +39,7 @@ let DSNV = [];
     renderDSNV(DSNV);
  }
 
- const themNv = () =>{
+ function themNv() {
 
    let nhanVien = layThongTinNhanVien();
 
@@ -79,7 +79,7 @@ const suaNhanVien = (taiKhoan) => {
   document.getElementById("tknv").disabled = true;
 };
 
-const capNhatNv = () => {
+function capNhatNv() {
   // Tìm vị trí của nhân viên cần cập nhật
   let taiKhoan = document.getElementById("tknv").value;
   let index = DSNV.findIndex((nv) => {
@@ -90,7 +90,7 @@ const capNhatNv = () => {
   // Render lại danh sách nhân viên
   renderDSNV(DSNV);
 
-  resetForm();
+  //resetForm();
 };
 
 const resetForm = () => {
